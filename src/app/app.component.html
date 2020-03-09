@@ -11,22 +11,26 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [routerLinkActive]="['active']">
+      <li class="nav-item" [routerLinkActive]="['active']" *ngIf="authService.isLoggedIn$ | async">
         <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
       </li>
       <li class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" [routerLink]="['about']">About</a>
       </li>
     </ul>
+
     <ul class="navbar-nav my-2 my-lg-0">
-        <li class="nav-item" [routerLinkActive]="['active']">
+        <li class="nav-item" [routerLinkActive]="['active']"  *ngIf="!(authService.isLoggedIn$ | async)">
           <a class="nav-link" [routerLink]="['sign-up']">Register</a>
         </li>
-        <li class="nav-item" [routerLinkActive]="['active']">
+        <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!(authService.isLoggedIn$ | async)">
           <a class="nav-link" [routerLink]="['sign-in']">Sign In</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link">Exit</a>
+        <li class="nav-item" *ngIf="(authService.isLoggedIn$ | async) as user">
+          <img src="{{user.photoURL}}" alt="{{user.displayName}}" class="user-photo">
+        </li>
+        <li class="nav-item" *ngIf="(authService.isLoggedIn$ | async) as user">
+          <a class="nav-link" (click)="authService.SignOut()">Exit</a>
         </li>
       </ul>
 

@@ -5,12 +5,15 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['sign-in']);
+const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'sign-up', component: SignUpComponent },
-  { path: 'sign-in', component: SignInComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AngularFireAuthGuard],  data: { authGuardPipe: redirectUnauthorizedToLogin }},
+  { path: 'sign-up', component: SignUpComponent,   data: { authGuardPipe: redirectLoggedInToDashboard } },
+  { path: 'sign-in', component: SignInComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard }},
   { path: 'about', component: AboutComponent },
   { path: '',
     redirectTo: '/sign-in',

@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -16,6 +19,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { StorageService } from './services/storage.service';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AboutComponent } from './pages/about/about.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+
 
 @NgModule({
   declarations: [
@@ -31,9 +36,11 @@ import { AboutComponent } from './pages/about/about.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    NgbModule
+    AngularFirestoreModule,
+    NgbModule,
+    FontAwesomeModule
   ],
-  providers: [StorageService],
+  providers: [StorageService, AngularFireAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,16 @@
-<p>about works!</p>
+<div class="jumbotron" *ngIf="!(authService.isLoggedIn$ | async)">
+    <h1 class="display-4">Do you like kittens?</h1>
+    <p class="lead">Of course you like.</p>
+    <img src="http://placekitten.com/g/400/300" alt="kity">
+    <hr class="my-4">
+    <p>Want some more kittens? Register now and have an extra kitty!!!</p>
+    <a class="btn btn-primary btn-lg" [routerLink]="['/sign-up']" role="button">Register</a>
+</div>
+
+<div class="jumbotron" *ngIf="authService.isLoggedIn$ | async">
+    <h1 class="display-4">Do you like kittens?</h1>
+    <p class="lead">There are no more kittens.</p>
+    <hr class="my-4">
+    <p>Sorry!</p>
+</div>
+
